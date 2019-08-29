@@ -1,9 +1,9 @@
 import request from '../utils/request';
 
-export const fetchData = (query) => {
-    return request({
-        url: '/ms/table/list',
-        method: 'post',
-        data: query
-    })
+let baseUrl = 'api'
+
+
+export const api = {
+    //Test
+    test: params => {return request.post(`/test`,params)}
 }

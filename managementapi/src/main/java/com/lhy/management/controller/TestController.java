@@ -1,5 +1,6 @@
 package com.lhy.management.controller;
 
+import com.lhy.management.common.result.Result;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -15,7 +16,8 @@ public class TestController {
 
     @RequestMapping("/test")
     @ResponseBody
-    private String test(){
-        return "Hello World";
+    private Result test(){
+        String test = "Hello World!";
+        return Result.suc("获取成功",test);
     }
 }
