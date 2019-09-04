@@ -1,7 +1,13 @@
 <template>
-    <el-button @click="testMethod()">
+    <div>
+        <el-button @click="testMethod()">
+            测试数据
+        </el-button>
+        <div style="font-size: 20px">
+            {{this.testText}}
+        </div>
+    </div>
 
-    </el-button>
 </template>
 
 <script>
@@ -10,7 +16,7 @@
         name: "test.vue",
         data :function(){
             return{
-
+                testText:'',
             }
         },
         methods:{
@@ -19,6 +25,8 @@
                 api.test(param)
                     .then(data => {
                         console.log(data);
+                        this.testText = data.data.content;
+                        console.log(this.testText);
                     })
             }
         }

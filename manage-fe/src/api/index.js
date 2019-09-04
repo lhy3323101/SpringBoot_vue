@@ -5,5 +5,5 @@ let baseUrl = 'api'
 
 export const api = {
     //Test
-    test: params => {return request.post(`/test`,params)}
+    test: params => {return request.post('/test',params)}
 }
