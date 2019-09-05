@@ -5,7 +5,7 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
 /**
- * Description:
+ * Description: 跨域过滤器
  *
  * @author Angel
  * @since 2019/8/28 17:40
