@@ -1,6 +1,6 @@
 import request from '../utils/request';
 
-let baseUrl = 'api'
+let baseUrl = 'api';
 
 
 export const api = {
