@@ -135,6 +135,11 @@
                     },
                     {
                         icon: 'el-icon-lx-redpacket_fill',
+                        index:"/student",
+                        title:"学生信息管理"
+                    },
+                    {
+                        icon: 'el-icon-lx-redpacket_fill',
                         index:"/test",
                         title:"测试页"
                     }
