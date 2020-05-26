@@ -85,9 +85,11 @@ public class SaltUtils {
         return hexDigits[d1] + hexDigits[d2];
     }
     public static void main(String[] args) {
-        String uuid = createSalt();
+        /*String uuid = createSalt();
         String str = encode("123456",uuid,SHA_256);
         System.out.println("uuid:" + uuid);
-        System.out.println("encodeStr:" + str);
+        System.out.println("encodeStr:" + str);*/
+        String url = "/test/login/index";
+        System.out.println(StringUtils.remove(url,"" + "/"));
     }
 }

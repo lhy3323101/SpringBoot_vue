@@ -46,13 +46,15 @@
         },
         methods:{
             login(){
+                let _this = this;
                 let message = this.$message;
                 api.login(this.loginForm)
                     .then(data => {
-                        console.log(data)
                         if (data.code === 1){
                             message.success(data.msg);
-                            this.$router.replace({path:'/index'})
+                            _this.$store.commit('login',data.re);
+                            let path = this.$route.query.redirect;
+                            this.$router.replace({path: path === '/' || path === undefined ? '/index' : path})
                         }else {
                             message.error(data.msg)
                         }

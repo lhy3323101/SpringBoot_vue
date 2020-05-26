@@ -1,92 +1,22 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li>
-        <a
-          href="https://vuejs.org"
-          target="_blank"
-        >
-          Core Docs
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://forum.vuejs.org"
-          target="_blank"
-        >
-          Forum
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://chat.vuejs.org"
-          target="_blank"
-        >
-          Community Chat
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://twitter.com/vuejs"
-          target="_blank"
-        >
-          Twitter
-        </a>
-      </li>
-      <br>
-      <li>
-        <a
-          href="http://vuejs-templates.github.io/webpack/"
-          target="_blank"
-        >
-          Docs for This Template
-        </a>
-      </li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li>
-        <a
-          href="http://router.vuejs.org/"
-          target="_blank"
-        >
-          vue-router
-        </a>
-      </li>
-      <li>
-        <a
-          href="http://vuex.vuejs.org/"
-          target="_blank"
-        >
-          vuex
-        </a>
-      </li>
-      <li>
-        <a
-          href="http://vue-loader.vuejs.org/"
-          target="_blank"
-        >
-          vue-loader
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/awesome-vue"
-          target="_blank"
-        >
-          awesome-vue
-        </a>
-      </li>
-    </ul>
+  <div style="margin-top: 40px">
+    <side-menu id="side-menu"></side-menu>
+    <div class="home">
+      <div id="header-div">
+        <div style="height: 150px"></div>
+        <Carousel></Carousel>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
     import {api} from '@/api/index.js'
+    import Carousel from './home/Carousel'
+    import SideMenu from "./library/SideMenu";
     export default {
         name: 'HelloWorld',
+        components:{Carousel,SideMenu},
         data () {
           return {
             msg: 'Welcome to Your Vue.js App'
@@ -99,7 +29,7 @@
                       .then(data => {
                           console.log(data.re.hello)
                     })
-            }
+              }
           },
           mounted() {
             this.test();
@@ -122,5 +52,19 @@ li {
 }
 a {
   color: #42b983;
+}
+
+#side-menu {
+  position: fixed;
+  margin-left: 50%;
+  left: -680px;
+  top: 100px;
+}
+
+.home {
+  width: 990px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: -20px;
 }
 </style>

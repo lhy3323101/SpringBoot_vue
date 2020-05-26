@@ -59,7 +59,7 @@
                             .then(data => {
                                 if (data.code === 1){
                                     message.success("注册成功");
-                                    this.$router.replace({path:'/index'})
+                                    this.$router.replace({path:'/'})
                                 }else {
                                     message.error(data.msg);
                                     return false;

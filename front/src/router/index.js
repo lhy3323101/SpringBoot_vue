@@ -5,15 +5,44 @@ import HelloWorld from '@/components/HelloWorld'
 Vue.use(Router)
 
 export default new Router({
+  mode:'history',
   routes: [
     {
-      path: '/index',
-      name: 'HelloWorld',
-      component: HelloWorld
+      path:'/home',
+      name:'Home',
+      component:resolve => require(['../components/Home.vue'], resolve),
+      redirect:'/index',
+      children:[
+        {
+          path: '/index',
+          name: 'HelloWorld',
+          component: HelloWorld,
+          meta: {
+            requireAuth: true
+          }
+        },
+        {
+          path: '/library',
+          name: 'Library',
+          component:resolve => require(['../components/library/LibraryIndex.vue'], resolve),
+          meta: {
+            requireAuth: true
+          }
+        },
+      ]
+    },
+    {
+      path: '/login',
+      component: resolve => require(['../components/Login.vue'], resolve),
     },
     {
       path: '/',
-      component: resolve => require(['../components/Login.vue'], resolve)
+      name:'Home',
+      redirect:'/index',
+      component:resolve => require(['../components/Home.vue'], resolve),
+      meta: {
+        requireAuth: true
+      }
     },
     {
       path: '/register',
