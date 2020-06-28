@@ -49,4 +49,9 @@ public class User extends SaltVo {
      * e-mail
      */
     private String mail;
+
+    /**
+     * 是否保持登录状态
+     */
+    private Boolean rememberFlag;
 }

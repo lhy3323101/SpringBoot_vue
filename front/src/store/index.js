@@ -17,9 +17,14 @@ export default new Vuex.Store(
       },
       del(state){
         state.user = null;
-        window.localStorage.removeItem('user');
+        window.localStorage.removeItem('user');SecretConstant
         window.localStorage.removeItem('userName')
+      },
+      logout(state){
+        state.user = [];
+        window.localStorage.removeItem('user');
       }
+
     }
   }
 )

@@ -1,7 +1,7 @@
 <template>
   <div class="login-wrap">
     <el-form :model="loginForm" :rules="rules" class="login-container" label-position="left"
-             label-width="0px" v-loading="loading">
+             label-width="0px" v-loading="loading" @keyup.enter.native="login">
       <h3 class="login_title">系统登录</h3>
       <el-form-item prop="userName">
         <el-input type="text" v-model="loginForm.userName"
@@ -11,10 +11,10 @@
         <el-input type="password" v-model="loginForm.password"
                   auto-complete="off" placeholder="密码"></el-input>
       </el-form-item>
-      <el-checkbox class="login_remember" v-model="checked"
-                   label-position="left"><span style="color: #505458">记住密码</span></el-checkbox>
+      <el-checkbox class="login_remember" v-model="loginForm.rememberFlag"
+                   label-position="left"><span style="color: #505458">记住我(保持登录)</span></el-checkbox>
       <el-form-item style="width: 100%">
-        <el-button type="primary" style="width: 40%;background: #505458;border: none" @click="login">登录</el-button>
+        <el-button type="primary" style="width: 40%;background: #505458;border: none" @click.native.prevent="login">登录</el-button>
         <router-link to="register"><el-button type="primary" style="width: 40%;background: #505458;border: none">注册</el-button></router-link>
       </el-form-item>
     </el-form>
@@ -37,10 +37,10 @@
                     ]
                 },
                 loginForm: {
-                    userName: 'admin',
-                    password: '123123'
+                    userName: '',
+                    password: '',
+                    rememberFlag:true
                 },
-                checked:true,
                 loading: false
             }
         },

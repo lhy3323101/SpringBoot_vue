@@ -11,10 +11,23 @@ Vue.config.productionTip = false
 Vue.prototype.request = request;
 import store from './store'
 
+import {api} from '@/api/index.js'
+
 router.beforeEach((to,from,next) => {
   if (to.meta.requireAuth){
     if (store.state.user && store.state.user.userName){
-      next();
+      console.log(store.state.user);
+      api.authentication()
+        .then(data => {
+          if (data.code === 1){
+            next();
+          }else {
+            next({
+              path:'login',
+              query:{redirect: to.fullPath}
+            })
+          }
+        })
     }else {
       next({
         path:'login',

@@ -4,8 +4,13 @@ import com.lhy.systemdemo.base.enums.BusinessExceptionCode;
 import com.lhy.systemdemo.base.exception.BusinessRuntimeException;
 import com.lhy.systemdemo.dao.LoginMapper;
 import com.lhy.systemdemo.pojo.User;
-import com.lhy.systemdemo.utils.SaltUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.crypto.SecureRandomNumberGenerator;
+import org.apache.shiro.crypto.hash.SimpleHash;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,8 +38,14 @@ public class LoginServiceImpl implements LoginService {
             throw new BusinessRuntimeException(BusinessExceptionCode.NO_USER.getDesc(),BusinessExceptionCode.NO_USER.getCode());
         }
         //验证密码
-        String encodeStr = SaltUtils.encode(user.getPassword(),resultUser.getSalt(),SaltUtils.SHA_256);
-        if (!encodeStr.equals(resultUser.getPassword())){
+        Subject subject = SecurityUtils.getSubject();
+        UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(user.getUserName(), user.getPassword());
+        if (user.getRememberFlag()){
+            usernamePasswordToken.setRememberMe(true);
+        }
+        try {
+            subject.login(usernamePasswordToken);
+        }catch (AuthenticationException e){
             throw new BusinessRuntimeException(BusinessExceptionCode.USER_PASSWORD_ERROR.getDesc(),BusinessExceptionCode.USER_PASSWORD_ERROR.getCode());
         }
         return resultUser;
@@ -48,8 +59,11 @@ public class LoginServiceImpl implements LoginService {
             throw new BusinessRuntimeException(BusinessExceptionCode.USER_EXISTED.getDesc(),BusinessExceptionCode.USER_EXISTED.getCode());
         }
         // 加密密码后保存
-        user.setSalt(SaltUtils.createSalt());
-        user.setPassword(SaltUtils.encode(user.getPassword(),user.getSalt(),SaltUtils.SHA_256));
+        String salt = new SecureRandomNumberGenerator().nextBytes().toString();
+        user.setSalt(salt);
+        //使用shiro对用户注册进行管理
+        int times = 2;
+        user.setPassword(new SimpleHash("md5", user.getPassword(), salt, times).toString());
         loginMapper.registerUser(user);
         return user.getId();
     }

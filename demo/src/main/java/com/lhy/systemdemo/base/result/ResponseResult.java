@@ -55,4 +55,11 @@ public class ResponseResult implements Serializable {
         result.setCode(ResultEnum.SUCCESS.getCode());
         return result;
     }
+
+    public static ResponseResult createSuccessResult(String msg){
+        ResponseResult result = new ResponseResult();
+        result.setCode(ResultEnum.SUCCESS.getCode());
+        result.setMsg(msg);
+        return result;
+    }
 }

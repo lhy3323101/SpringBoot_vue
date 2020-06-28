@@ -7,13 +7,13 @@ import com.lhy.systemdemo.base.exception.EncryException;
 import com.lhy.systemdemo.base.result.ResponseResult;
 import com.lhy.systemdemo.pojo.User;
 import com.lhy.systemdemo.service.login.LoginService;
+import com.sun.xml.internal.txw2.output.ResultFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -94,6 +94,21 @@ public class LoginController {
             result.setCode(ResultEnum.ERROR.getCode());
             result.setMsg("内部服务错误，请联系管理员");
         }
+        return result;
+    }
+
+    @PostMapping("/logout")
+    public Object logout(){
+        Subject subject = SecurityUtils.getSubject();
+        subject.logout();
+        String message = "成功登出";
+        ResponseResult result = ResponseResult.createSuccessResult(message);
+        return result;
+    }
+
+    @PostMapping(value = "/authentication")
+    public Object authentication(){
+        ResponseResult result = ResponseResult.createSuccessResult("身份认证成功");
         return result;
     }
 }

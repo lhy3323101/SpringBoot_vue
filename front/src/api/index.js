@@ -9,5 +9,9 @@ export const api = {
   /**登录*/
   login:param =>{return request.post(`${loginUrl}/login`,param)},
   /**注册*/
-  register:param =>{return request.post(`${loginUrl}/register`,param)}
+  register:param =>{return request.post(`${loginUrl}/register`,param)},
+  /**登出*/
+  logout:param =>{return request.post(`${loginUrl}/logout`,param)},
+  /** 校验用户登录状态*/
+  authentication:param=>{return request.post(`${loginUrl}/authentication`,param)}
 }
