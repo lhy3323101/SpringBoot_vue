@@ -23,12 +23,15 @@
         data () {
             return {
                 fileList: [],
-                url: ''
+                url: '',
             }
         },
         methods: {
             handleRemove (file, fileList) {
-                console.log(file, fileList)
+                let data = {
+                    url : '',
+                }
+                this.$emit('delUrl',data)
             },
             handlePreview (file) {
                 console.log(file)
@@ -43,9 +46,8 @@
             },
             handleSuccess (response) {
                 this.url = response.re
-                // console.log(this.url)
                 this.$emit('onUpload')
-                this.$message.warning('上传成功')
+                this.$message.success('上传成功')
             },
             clear () {
                 this.$refs.upload.clearFiles();

@@ -8,7 +8,8 @@ export default new Vuex.Store(
     state:{
       user:{
         userName: window.localStorage.getItem('user') == null ? '' : JSON.parse(window.localStorage.getItem('user')).userName
-      }
+      },
+      adminMenus:[]
     },
     mutations:{
       login (state,user) {
@@ -17,12 +18,16 @@ export default new Vuex.Store(
       },
       del(state){
         state.user = null;
-        window.localStorage.removeItem('user');SecretConstant
+        window.localStorage.removeItem('user');
         window.localStorage.removeItem('userName')
       },
       logout(state){
         state.user = [];
+        state.adminMenus = [];
         window.localStorage.removeItem('user');
+      },
+      initAdminMenu (state, menus) {
+        state.adminMenus = menus
       }
 
     }

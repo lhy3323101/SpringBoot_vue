@@ -1,6 +1,7 @@
 package com.lhy.systemdemo.dao;
 
 import com.lhy.systemdemo.pojo.User;
+import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
 
@@ -10,7 +11,7 @@ import javax.annotation.Resource;
  * @author Angel
  * @since 2020/5/11 9:26
  */
-@Resource
+@Repository
 public interface LoginMapper {
 
     /**

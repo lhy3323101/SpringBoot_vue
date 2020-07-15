@@ -39,7 +39,7 @@
                 loginForm: {
                     userName: '',
                     password: '',
-                    rememberFlag:true
+                    rememberFlag:false
                 },
                 loading: false
             }
@@ -51,10 +51,9 @@
                 api.login(this.loginForm)
                     .then(data => {
                         if (data.code === 1){
-                            message.success(data.msg);
                             _this.$store.commit('login',data.re);
                             let path = this.$route.query.redirect;
-                            this.$router.replace({path: path === '/' || path === undefined ? '/index' : path})
+                            this.$router.replace({path: path === '/' || path === undefined ? '/admin' : path})
                         }else {
                             message.error(data.msg)
                         }

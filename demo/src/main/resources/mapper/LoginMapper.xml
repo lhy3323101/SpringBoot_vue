@@ -7,6 +7,7 @@
 
     <select id="queryUserByName" resultType="com.lhy.systemdemo.pojo.User" parameterType="string" timeout="3">
         select
+            id as id,
             user_name as userName,
             password as password,
             salt as salt,

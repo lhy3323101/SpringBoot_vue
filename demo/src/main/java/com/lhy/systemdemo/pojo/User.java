@@ -54,4 +54,10 @@ public class User extends SaltVo {
      * 是否保持登录状态
      */
     private Boolean rememberFlag;
+
+    /**
+     * 用户状态
+     */
+    private boolean enabled;
+
 }

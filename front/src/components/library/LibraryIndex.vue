@@ -24,7 +24,6 @@
         },
         methods:{
             test(data){
-                console.log(data)
                 this.pid = data.key
             }
         }

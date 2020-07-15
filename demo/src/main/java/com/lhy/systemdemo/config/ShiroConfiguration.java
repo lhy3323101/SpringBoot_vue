@@ -1,6 +1,8 @@
 package com.lhy.systemdemo.config;
 
+import com.lhy.systemdemo.filter.URLPathMatchingFilter;
 import com.lhy.systemdemo.utils.shiro.LhyRealm;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
@@ -11,6 +13,10 @@ import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import javax.servlet.Filter;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * Description:
@@ -30,6 +36,16 @@ public class ShiroConfiguration {
     public ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager);
+        shiroFilterFactoryBean.setLoginUrl("/nowhere");
+        Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
+        Map<String, Filter> customizedFilter = new HashMap<>();
+        // 设置自定义过滤器名称为 url
+        customizedFilter.put("url", getURLPathMatchingFilter());
+        filterChainDefinitionMap.put("/login/authentication", "authc");
+        filterChainDefinitionMap.put("/admin/**", "authc");
+        filterChainDefinitionMap.put("/admin/**", "url");
+        shiroFilterFactoryBean.setFilters(customizedFilter);
+        shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
     }
 
@@ -76,6 +92,16 @@ public class ShiroConfiguration {
         return simpleCookie;
     }
 
+    @Bean
+    public SecurityManager getSecurityManager() {
+        DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
+        SecurityUtils.setSecurityManager(securityManager);
+        return securityManager;
+    }
+
+    public URLPathMatchingFilter getURLPathMatchingFilter(){
+        return new URLPathMatchingFilter();
+    }
 
 
 }

@@ -27,13 +27,14 @@ public class MyWebConfigurer extends WebMvcConfigurationSupport {
         registry.addResourceHandler("/book/file/**").addResourceLocations("file:" + "D:/Person/Project/front_back/img/");
     }
 
-    @Override
+    //弃用，采用shiro自带filter
+    /*@Override
     protected void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(getLoginIntercepter())
                 .addPathPatterns("/**")
                 .excludePathPatterns("/index.html")
                 .excludePathPatterns("/login/login")
                 .excludePathPatterns("/login/logout");
-    }
+    }*/
 
 }

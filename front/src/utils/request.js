@@ -1,4 +1,6 @@
 import axios from 'axios';
+import router from '../router'
+import store from '../store'
 
 const service = axios.create({
   // process.env.NODE_ENV === 'development' 来判断是否开发环境
@@ -21,6 +23,22 @@ service.interceptors.request.use(
     return Promise.reject(error);
   }
 )
+service.interceptors.response.use(
+  response => {
+    return response
+  },
+  error => {
+    if (error) {
+      alert("登录过期或无访问权限")
+      store.commit('logout')
+      router.replace('/login').catch(error =>{
+      })
+    }
+    // 返回接口返回的错误信息
+    return Promise.reject(error)
+  })
+
+
 
 export default {
   get(url,param) {
