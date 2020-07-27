@@ -47,12 +47,12 @@
           </el-card>
         </div>
       </el-col>
-
     </el-row>
     <el-dialog
       title="新增功能权限"
+      center
       :visible.sync="dialogFormVisible">
-      <el-form :model="dataForm" style="text-align: left" ref="dataForm" >
+      <el-form :model="dataForm" style="text-align: left" ref="dataForm" :rules="rules">
         <el-form-item label="名称(英文)：" label-width="120px" prop="name">
           <span style="color: red">英文单词之间的间隔请使用下划线(_)</span>
           <el-input v-model="dataForm.name" autocomplete="off" ></el-input>
@@ -84,14 +84,14 @@
             return{
                 rules:{
                     name:[
-                        {required:true,trigger:'blur',message:'请填写功能名(英文)'}
+                        {required:true,trigger:'blur',message:"请填写功能名(英文)"}
                     ],
                     desc:[
-                        {required: true, trigger: 'blur', message: "请填写功能描述"}
+                        {required: true, trigger:'blur', message:"请填写功能描述"}
                     ],
                     url:[
-                        {required:true,trigger:'blur',message:'请填写功能链接'}
-                    ],
+                        {required:true,trigger:'blur',message:"请填写功能链接"}
+                    ]
                 },
                 dataForm:{
                     name:'',
@@ -104,6 +104,9 @@
         },
         methods:{
             editForm(){
+                if (this.$refs["dataForm"]!==undefined) {
+                    this.$refs["dataForm"].resetFields();
+                }
                 this.dataForm = {
                     name:'',
                     url:'',
@@ -118,23 +121,26 @@
                     name:value.name,
                     url:value.url,
                 };
-                admin.addPermission(param)
-                    .then(data => {
-                        if (data && data.code === 1){
-                            message.success("新增功能成功");
-                        }else {
-                            message.warning("新增功能异常，请重试，重试无效请联系管理员")
-                        }
-                    })
-                    .catch(() => {
-                        message.error("新增功能异常，请联系管理员")
-                    })
-                    .finally(() => {
-                        this.dialogFormVisible = false;
-                        this.initPermissions();
-                    })
+                this.$refs['dataForm'].validate(valid => {
+                    if (valid){
+                        admin.addPermission(param)
+                            .then(data => {
+                                if (data && data.code === 1){
+                                    message.success("新增功能成功");
+                                }else {
+                                    message.warning("新增功能异常，请重试，重试无效请联系管理员")
+                                }
+                            })
+                            .catch(() => {
+                                message.error("新增功能异常，请联系管理员")
+                            })
+                            .finally(() => {
+                                this.dialogFormVisible = false;
+                                this.initPermissions();
+                            })
 
-
+                    }
+                })
             },
             initPermissions(){
                 let _this = this;
