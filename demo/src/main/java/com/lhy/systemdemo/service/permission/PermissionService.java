@@ -1,5 +1,7 @@
 package com.lhy.systemdemo.service.permission;
 
+import com.lhy.systemdemo.pojo.permission.Permission;
+
 import java.util.List;
 import java.util.Set;
 
@@ -23,4 +25,10 @@ public interface PermissionService {
      * @return
      */
     Boolean existUrl(String url);
+
+    List<Permission> queryPermissions();
+
+    List<Permission> queryPermissionByRoleId(Long id);
+
+    int addNewPermission(Permission vo);
 }

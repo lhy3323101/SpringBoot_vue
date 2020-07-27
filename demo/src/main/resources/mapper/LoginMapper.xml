@@ -14,7 +14,8 @@
             phone as phone,
             mail as mail,
             name as name,
-            phone as phone
+            phone as phone,
+            enabled as enabled
             from
             t_user
             where

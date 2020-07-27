@@ -7,10 +7,10 @@
     <result column="name_zh" jdbcType="VARCHAR" property="nameZh" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, name, name_zh
+    id, name, name_zh,enabled
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from t_role
     where id = #{id,jdbcType=BIGINT}
@@ -69,5 +69,49 @@
     set name = #{name,jdbcType=VARCHAR},
       name_zh = #{nameZh,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="queryRoles" resultType="com.lhy.systemdemo.pojo.role.RoleVO">
+    select
+    <include refid="Base_Column_List" />
+    from t_role
+  </select>
+
+  <select id="queryRolesByIds" parameterType="list" resultType="com.lhy.systemdemo.pojo.role.Role" timeout="3">
+    select
+    <include refid="Base_Column_List" />
+    from t_role
+    where
+    id in
+    <foreach collection="list" open="(" close=")" index="index" item="item" separator=",">
+      #{item}
+    </foreach>
+  </select>
+
+  <update id="changeRoleStatus" parameterType="com.lhy.systemdemo.pojo.role.Role" timeout="3">
+    update t_role
+    <set>
+      <if test="enabled != null">
+        enabled = #{enabled}
+      </if>
+    </set>
+    <where>
+      id =#{id}
+    </where>
+  </update>
+
+  <update id="updateRole" parameterType="com.lhy.systemdemo.pojo.role.Role" timeout="3">
+    update t_role
+    <set>
+      <if test="name != null">
+        name = #{name}
+      </if>
+      <if test="nameZh != null">
+        name_zh = #{nameZh}
+      </if>
+    </set>
+    <where>
+        id = #{id}
+    </where>
   </update>
 </mapper>

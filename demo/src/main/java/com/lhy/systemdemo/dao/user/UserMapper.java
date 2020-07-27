@@ -1,6 +1,7 @@
 package com.lhy.systemdemo.dao.user;
 
 import com.lhy.systemdemo.pojo.User;
+import com.lhy.systemdemo.pojo.UserVO;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -13,8 +14,11 @@ import java.util.List;
  */
 @Repository
 public interface UserMapper {
-    List<User> queryUsers();
+    List<UserVO> queryUsers();
 
     User queryUserByName(String name);
 
+    void updateUser(User user);
+
+    void changeUserStatus(User user);
 }

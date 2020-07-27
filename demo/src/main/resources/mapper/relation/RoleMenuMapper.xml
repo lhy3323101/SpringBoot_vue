@@ -75,4 +75,27 @@
     from  t_role_menu
     where rid = #{rid}
   </select>
+
+  <select id="queryMenuByRoleId" resultType="com.lhy.systemdemo.pojo.relation.RoleMenu" parameterType="long">
+    select
+    <include refid="Base_Column_List" />
+    from  t_role_menu
+    where rid = #{rid}
+  </select>
+  <delete id="deleteMenusByRoleId" parameterType="long" timeout="3">
+    delete from t_role_menu
+    <where>
+      rid = #{rid}
+    </where>
+  </delete>
+
+  <insert id="addNewMenusByRoleId" parameterType="com.lhy.systemdemo.pojo.relation.AddRoleMenuVO" timeout="3">
+    insert into
+    t_role_menu
+    (rid,mid)
+    values
+    <foreach collection="mids" separator="," item="item" index="index" close="" open="">
+      (#{rid},#{item})
+    </foreach>
+  </insert>
 </mapper>

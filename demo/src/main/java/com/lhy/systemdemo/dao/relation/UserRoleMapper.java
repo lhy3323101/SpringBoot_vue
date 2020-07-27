@@ -1,5 +1,6 @@
 package com.lhy.systemdemo.dao.relation;
 
+import com.lhy.systemdemo.pojo.relation.AddUserRoleVO;
 import com.lhy.systemdemo.pojo.relation.UserRole;
 import org.springframework.stereotype.Repository;
 
@@ -26,4 +27,16 @@ public interface UserRoleMapper {
      * @return 关系列表
      */
     List<UserRole> queryUserRoleListByUserId(Long uid);
+
+    /**
+     * 根据用户id清空用户角色
+     * @param uid 用户主键Id
+     */
+    void deleteRelationByUserId(Long uid);
+
+    /**
+     * 对单用户添加角色
+     * @param vo
+     */
+    void batchInsertByUid(AddUserRoleVO vo);
 }

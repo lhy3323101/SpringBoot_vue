@@ -127,4 +127,20 @@
         </foreach>
     </select>
 
+  <select id="queryAllMenus" resultType="com.lhy.systemdemo.pojo.menu.Menu">
+    select
+    <include refid="Base_Column_List" />
+    from t_menu
+    where
+    1=1
+  </select>
+
+  <select id="queryMenusByRoleId" resultType="com.lhy.systemdemo.pojo.menu.Menu">
+    select
+    <include refid="Base_Column_List" />
+    from t_menu
+    where
+    rid = #{rid}
+  </select>
+
 </mapper>

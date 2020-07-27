@@ -18,4 +18,12 @@ public interface MenuService {
      */
     List<Menu> getMenusByCurrentUser();
 
+    List<Menu> queryAllMenus();
+
+    /**
+     * 根据角色id获取菜单列表
+     * @return
+     */
+    List<Menu> queryMenusByRoleId(Long rid);
+
 }

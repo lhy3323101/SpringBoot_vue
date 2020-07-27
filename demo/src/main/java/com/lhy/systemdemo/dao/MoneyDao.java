@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 /**
  * Description:
  *
- * @author 李浩源(haoyuan.li01 @ ucarinc.com)
  * @since 2020/5/28 17:30
  */
 @Repository

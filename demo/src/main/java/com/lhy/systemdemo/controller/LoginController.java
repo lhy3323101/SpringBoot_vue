@@ -54,22 +54,11 @@ public class LoginController {
         try {
             User resultUser = loginService.login(user);
             result.setRe(resultUser);
-        }catch (BusinessRuntimeException e){
-            if (BusinessExceptionCode.USER_NAME_EMPTY.getCode().equals(e.getCode())){
-                result.setMsg(e.getMessage());
-                result.setCode(ResultEnum.ERROR.getCode());
-            }
-            if (BusinessExceptionCode.NO_USER.getCode().equals(e.getCode())){
-                result.setMsg(e.getMessage());
-                result.setCode(ResultEnum.ERROR.getCode());
-            }
-            if (BusinessExceptionCode.USER_PASSWORD_ERROR.getCode().equals(e.getCode())){
-                result.setMsg(e.getMessage());
-                result.setCode(ResultEnum.ERROR.getCode());
-            }
-        }catch (EncryException e){
-            result.setMsg("请检查密码后重试");
+        }catch (Exception e){
+            log.error("登录异常",e);
+            result.setMsg(e.getMessage());
             result.setCode(ResultEnum.ERROR.getCode());
+            return result;
         }
         return result;
     }
@@ -93,6 +82,7 @@ public class LoginController {
             log.error("注册用户异常",e);
             result.setCode(ResultEnum.ERROR.getCode());
             result.setMsg("内部服务错误，请联系管理员");
+            return result;
         }
         return result;
     }

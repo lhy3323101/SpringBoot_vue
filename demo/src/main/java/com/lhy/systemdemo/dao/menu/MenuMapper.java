@@ -26,4 +26,8 @@ public interface MenuMapper {
      * @return
      */
     List<Menu> queryAllByIds(List<Long> ids);
+
+    List<Menu> queryAllMenus();
+
+    List<Menu> queryMenusByRoleId(Long rid);
 }

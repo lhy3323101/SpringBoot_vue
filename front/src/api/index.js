@@ -1,9 +1,12 @@
 import request from '../utils/request';
+import ar from "element-ui/src/locale/lang/ar";
 
 let loginUrl = '/login';
 let menuUrl = '/menu';
 let adminUrl = '/admin';
 let userUrl = '/user';
+let articleUrl = '/article';
+let permissionUrl = '/permission';
 
 export const api = {
 
@@ -21,6 +24,23 @@ export const api = {
   queryMenus:() => {return request.get(`${adminUrl}/queryMenus`,{})}
 }
 export const admin = {
-  queryUsers:() =>{return request.get(`${adminUrl}/queryUsers`,{})},
-  saveArticle:param =>{return request.post(`${adminUrl}/saveArticle`,param)}
+  initUserList:param =>{return request.post(`${adminUrl}/queryUsers`,param)},
+  queryUsers:param =>{return request.post(`${adminUrl}/queryUsers`,param)},
+  queryRoles:param =>{return request.post(`${adminUrl}/queryUsers`,param)},
+  initRoles:param =>{return request.post(`${adminUrl}/queryRoles`,param)},
+  saveUser:param => {return request.post(`${adminUrl}/saveUser`,param)},
+  changeUserStatus:param =>{return request.post(`${adminUrl}/changeUserStatus`,param)},
+  initPermissions:param => {return request.post(`${adminUrl}/initPermissions`,param)},
+  initMenus:param => {return request.post(`${adminUrl}/initMenus`,param)},
+  changeRoleStatus:param => {return request.post(`${adminUrl}/changeRoleStatus`,param)},
+  updateRole:param => {return request.post(`${adminUrl}/updateRole`,param)},
+  addPermission:param => {return request.post(`${adminUrl}/addPermission`,param)}
+}
+
+export const article ={
+  saveArticle:param =>{return request.post(`${articleUrl}/saveArticle`,param)},
+  queryList:param =>{return request.post(`${articleUrl}/queryList`,param)},
+  initArticleList:param => {return request.post(`${articleUrl}/queryList`,param)},
+  loadArticle:param => {return request.post(`${articleUrl}/loadArticle`,param.id)},
+  deleteArticle:param => {return request.post(`${articleUrl}/deleteArticle`,param.id)}
 }

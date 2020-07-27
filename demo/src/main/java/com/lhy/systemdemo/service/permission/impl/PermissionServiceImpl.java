@@ -2,6 +2,7 @@ package com.lhy.systemdemo.service.permission.impl;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import com.lhy.systemdemo.base.exception.BusinessRuntimeException;
 import com.lhy.systemdemo.dao.permission.PermissionMapper;
 import com.lhy.systemdemo.dao.relation.RolePermissionMapper;
 import com.lhy.systemdemo.pojo.permission.Permission;
@@ -55,5 +56,24 @@ public class PermissionServiceImpl implements PermissionService {
             }
         }
         return false;
+    }
+
+    @Override
+    public List<Permission> queryPermissions() {
+        return permissionMapper.queryAllPermissions();
+    }
+
+    @Override
+    public List<Permission> queryPermissionByRoleId(Long id) {
+        return permissionMapper.queryPermissionByRoleId(id);
+    }
+
+    @Override
+    public int addNewPermission(Permission vo) {
+        try {
+            return permissionMapper.insert(vo);
+        }catch (Exception e){
+            throw new BusinessRuntimeException("添加功能异常");
+        }
     }
 }

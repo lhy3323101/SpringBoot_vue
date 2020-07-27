@@ -37,6 +37,10 @@ public class LoginServiceImpl implements LoginService {
         if (resultUser == null){
             throw new BusinessRuntimeException(BusinessExceptionCode.NO_USER.getDesc(),BusinessExceptionCode.NO_USER.getCode());
         }
+        //如果账号被禁用则不允许登录
+        if (!resultUser.isEnabled()){
+            throw new BusinessRuntimeException(BusinessExceptionCode.USER_BANED.getDesc(),BusinessExceptionCode.USER_BANED.getCode());
+        }
         //验证密码
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(user.getUserName(), user.getPassword());

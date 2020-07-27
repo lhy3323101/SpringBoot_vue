@@ -63,7 +63,24 @@ export default new Router({
       meta: {
         requireAuth: true
       }
-    }
+    },
+    {
+      path: '/article',
+      name: 'ArticleList',
+      component: resolve => require(['../components/article/ArticleList.vue'],resolve),
+      meta: {
+        requireAuth: true
+      }
+    },
+    {
+      path: '/article/detail',
+      name: 'ArticleDetail',
+      component: resolve => require(['../components/article/ArticleDetails.vue'],resolve),
+      meta: {
+        requireAuth: true
+      }
+    },
+
   ]
 })
 
@@ -115,6 +132,14 @@ export const createRouter = routes => new Router({
       path:'/admin',
       name:'Admin',
       component: resolve => require(['../components/admin/AdminIndex.vue'],resolve),
+      meta: {
+        requireAuth: true
+      }
+    },
+    {
+      path: '/admin/content/editor',
+      name: 'Editor',
+      component: resolve => require(['../components/admin/content/ArticleEditor.vue'],resolve),
       meta: {
         requireAuth: true
       }

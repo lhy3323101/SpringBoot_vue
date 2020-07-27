@@ -19,6 +19,7 @@
     delete from t_user_role
     where id = #{id,jdbcType=BIGINT}
   </delete>
+
   <insert id="insert" parameterType="com.lhy.systemdemo.pojo.relation.UserRole">
     <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
@@ -26,6 +27,16 @@
     insert into t_user_role (id, uid, rid)
     values (#{id,jdbcType=BIGINT}, #{uid,jdbcType=BIGINT}, #{rid,jdbcType=BIGINT})
   </insert>
+
+  <insert id="batchInsertByUid" parameterType="com.lhy.systemdemo.pojo.relation.AddUserRoleVO" timeout="3">
+    insert into t_user_role
+    (uid,rid)
+    values
+    <foreach collection="roles" separator="," item="item" index="index" close="" open="">
+      (#{uid},#{item})
+    </foreach>
+  </insert>
+
   <insert id="insertSelective" parameterType="com.lhy.systemdemo.pojo.relation.UserRole">
     <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
@@ -75,4 +86,13 @@
     from t_user_role
     where uid = #{uid}
   </select>
+
+  <delete id="deleteRelationByUserId" parameterType="long">
+    delete from t_user_role
+    <where>
+      uid = #{uid}
+    </where>
+  </delete>
+
+
 </mapper>

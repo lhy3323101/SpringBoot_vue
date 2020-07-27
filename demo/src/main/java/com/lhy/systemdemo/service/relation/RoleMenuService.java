@@ -1,6 +1,7 @@
 package com.lhy.systemdemo.service.relation;
 
 import com.lhy.systemdemo.pojo.relation.RoleMenu;
+import com.lhy.systemdemo.pojo.role.Role;
 
 import java.util.List;
 
@@ -25,4 +26,10 @@ public interface RoleMenuService {
      * @return
      */
     List<RoleMenu> queryAllByRid(List<Long> rids);
+
+    void deleteMenusByRoleId(Long rid);
+
+    void addNewMenusByRoleId(Long rid,List<Long> mids);
+
+    void updateRole(Role role);
 }

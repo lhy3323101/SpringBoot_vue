@@ -58,6 +58,16 @@ public class MenuServiceImpl implements MenuService {
         return handleMenus(menus);
     }
 
+    @Override
+    public List<Menu> queryAllMenus() {
+        return handleMenus(menuMapper.queryAllMenus());
+    }
+
+    @Override
+    public List<Menu> queryMenusByRoleId(Long rid) {
+        return menuMapper.queryMenusByRoleId(rid);
+    }
+
     /**
      * 处理当前用户拥有菜单为层级关系(父子节点)
      */

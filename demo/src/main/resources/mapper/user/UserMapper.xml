@@ -14,7 +14,7 @@
             name as name,
             enabled as enabled
     </sql>
-    <select id="queryUsers" resultType="com.lhy.systemdemo.pojo.User">
+    <select id="queryUsers" resultType="com.lhy.systemdemo.pojo.UserVO">
         select
         <include refid="select_items"/>
         from
@@ -30,4 +30,37 @@
         where
         name = #{name}
     </select>
+
+        <update id="updateUser" parameterType="com.lhy.systemdemo.pojo.User">
+        update t_user
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="userName != null">
+                user_name = #{userName},
+            </if>
+            <if test="phone != null">
+                phone = #{phone},
+            </if>
+            <if test="mail != null">
+                mail = #{mail},
+            </if>
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <update id="changeUserStatus"  parameterType="com.lhy.systemdemo.pojo.User" timeout="3">
+        update t_user
+        <set>
+            <if test="enabled != null">
+                enabled = #{enabled}
+            </if>
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
 </mapper>

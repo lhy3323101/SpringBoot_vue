@@ -50,7 +50,7 @@
 
 <script>
   import ImgUpload from '../../library/ImgUpload'
-  import {admin} from '@/api/index.js'
+  import {article} from '@/api/index.js'
 
     export default {
         name: "ArticleEditor",
@@ -87,7 +87,7 @@
                         contentHtml:render,
                         contentMd:value
                     };
-                    admin.saveArticle(param)
+                    article.saveArticle(param)
                         .then(data => {
                             if (data && data.code === 1){
                                 this.$message.success("保存成功")

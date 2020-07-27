@@ -67,8 +67,6 @@
         },
         methods:{
             edit(){
-                /*this.$store.commit('del');
-                console.log("test love")*/
                 this.$refs.editForm.dialogFormVisible = true;
             },
             loadImg(data){

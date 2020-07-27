@@ -1,5 +1,6 @@
 package com.lhy.systemdemo.dao.relation;
 
+import com.lhy.systemdemo.pojo.relation.AddRoleMenuVO;
 import com.lhy.systemdemo.pojo.relation.RoleMenu;
 import org.springframework.stereotype.Repository;
 
@@ -26,4 +27,10 @@ public interface RoleMenuMapper {
      * @return
      */
     List<RoleMenu> queryAllByRid(Long rid);
+
+    List<RoleMenu> queryMenuByRoleId(Long rid);
+
+    void deleteMenusByRoleId(Long rid);
+
+    void addNewMenusByRoleId(AddRoleMenuVO vo);
 }

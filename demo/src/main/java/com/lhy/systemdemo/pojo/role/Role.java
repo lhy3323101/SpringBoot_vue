@@ -1,7 +1,10 @@
 package com.lhy.systemdemo.pojo.role;
 
+import lombok.Data;
+
 import java.io.Serializable;
 
+@Data
 public class Role implements Serializable {
     private Long id;
 
@@ -9,29 +12,8 @@ public class Role implements Serializable {
 
     private String nameZh;
 
+    private Boolean enabled;
+
     private static final long serialVersionUID = 1L;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getNameZh() {
-        return nameZh;
-    }
-
-    public void setNameZh(String nameZh) {
-        this.nameZh = nameZh;
-    }
 }
