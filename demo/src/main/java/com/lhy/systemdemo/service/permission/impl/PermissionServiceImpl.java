@@ -63,10 +63,6 @@ public class PermissionServiceImpl implements PermissionService {
         return permissionMapper.queryAllPermissions();
     }
 
-    @Override
-    public List<Permission> queryPermissionByRoleId(Long id) {
-        return permissionMapper.queryPermissionByRoleId(id);
-    }
 
     @Override
     public int addNewPermission(Permission vo) {

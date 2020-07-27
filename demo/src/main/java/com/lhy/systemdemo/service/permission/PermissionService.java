@@ -28,7 +28,5 @@ public interface PermissionService {
 
     List<Permission> queryPermissions();
 
-    List<Permission> queryPermissionByRoleId(Long id);
-
     int addNewPermission(Permission vo);
 }
