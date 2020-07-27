@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lhy.systemdemo.dao.relation.RolePermissionMapper">
+  <resultMap id="BaseResultMap" type="com.lhy.systemdemo.pojo.relation.RolePermission">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="rid" jdbcType="BIGINT" property="rid" />
+    <result column="pid" jdbcType="BIGINT" property="pid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, rid, pid
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_role_permission
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_role_permission
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.lhy.systemdemo.pojo.relation.RolePermission">
+    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_role_permission (id, rid, pid)
+    values (#{id,jdbcType=BIGINT}, #{rid,jdbcType=BIGINT}, #{pid,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lhy.systemdemo.pojo.relation.RolePermission">
+    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_role_permission
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      id,
+      <if test="rid != null">
+        rid,
+      </if>
+      <if test="pid != null">
+        pid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      #{id,jdbcType=BIGINT},
+      <if test="rid != null">
+        #{rid,jdbcType=BIGINT},
+      </if>
+      <if test="pid != null">
+        #{pid,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lhy.systemdemo.pojo.relation.RolePermission">
+    update t_role_permission
+    <set>
+      <if test="rid != null">
+        rid = #{rid,jdbcType=BIGINT},
+      </if>
+      <if test="pid != null">
+        pid = #{pid,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lhy.systemdemo.pojo.relation.RolePermission">
+    update t_role_permission
+    set rid = #{rid,jdbcType=BIGINT},
+      pid = #{pid,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="queryPidsByRids" resultType="long" parameterType="list">
+    select
+    pid
+    from t_role_permission
+    where rid in
+    <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+      #{item}
+    </foreach>
+  </select>
+
+  <select id="queryPermissionByRoleId" resultType="com.lhy.systemdemo.pojo.relation.RolePermission">
+    select
+    <include refid="Base_Column_List" />
+    from t_role_permission
+    where
+    rid = #{rid}
+  </select>
+
+  <delete id="deletePermissionByRoleId" parameterType="long" timeout="3">
+    delete from t_role_permission
+    <where>
+      rid = #{rid}
+    </where>
+  </delete>
+
+  <insert id="addNewPermissionsByRoleId" parameterType="com.lhy.systemdemo.pojo.relation.AddRolePermissionVO" timeout="3">
+        insert into
+        t_role_permission
+        (rid,pid)
+        values
+        <foreach collection="pids" open="" close="" index="index" item="item" separator=",">
+          (#{rid},#{item})
+        </foreach>
+  </insert>
+</mapper>

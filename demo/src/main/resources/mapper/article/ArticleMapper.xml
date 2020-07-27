@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lhy.systemdemo.dao.article.ArticleMapper">
+  <resultMap id="BaseResultMap" type="com.lhy.systemdemo.pojo.article.Article">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="abstract" jdbcType="VARCHAR" property="articleAbstract" />
+    <result column="cover" jdbcType="VARCHAR" property="cover" />
+    <result column="date" jdbcType="TIMESTAMP" property="date" />
+    <result column="status" jdbcType="INTEGER" property="status"/>
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.lhy.systemdemo.pojo.article.Article">
+    <result column="content_html" jdbcType="LONGVARCHAR" property="contentHtml" />
+    <result column="content_md" jdbcType="LONGVARCHAR" property="contentMd" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, title, article_abstract, cover, date,status
+  </sql>
+  <sql id="Blob_Column_List">
+    content_html, content_md
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_article
+    where id = #{id,jdbcType=BIGINT} and status = 1
+  </select>
+  <select id="queryList" resultType="com.lhy.systemdemo.pojo.article.Article">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_article
+    where
+    status = 1
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_article
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.lhy.systemdemo.pojo.article.Article">
+    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_article (id, title, article_abstract,
+      cover, date, content_html,
+      content_md,status)
+    values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{articleAbstract,jdbcType=VARCHAR},
+      #{cover,jdbcType=VARCHAR}, #{date,jdbcType=TIMESTAMP}, #{contentHtml,jdbcType=LONGVARCHAR},
+      #{contentMd,jdbcType=LONGVARCHAR},#{status,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lhy.systemdemo.pojo.article.Article">
+    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_article
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      id,
+      <if test="title != null">
+        title,
+      </if>
+      <if test="articleAbstract != null">
+        article_abstract,
+      </if>
+      <if test="cover != null">
+        cover,
+      </if>
+      <if test="date != null">
+        date,
+      </if>
+      <if test="contentHtml != null">
+        content_html,
+      </if>
+      <if test="contentMd != null">
+        content_md,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      #{id,jdbcType=BIGINT},
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="articleAbstract != null">
+        #{articleAbstract,jdbcType=VARCHAR},
+      </if>
+      <if test="cover != null">
+        #{cover,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null">
+        #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="contentHtml != null">
+        #{contentHtml,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="contentMd != null">
+        #{contentMd,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lhy.systemdemo.pojo.article.Article">
+    update t_article
+    <set>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="articleAbstract != null">
+        article_abstract = #{articleAbstract,jdbcType=VARCHAR},
+      </if>
+      <if test="cover != null">
+        cover = #{cover,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null">
+        date = #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="contentHtml != null">
+        content_html = #{contentHtml,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="contentMd != null">
+        content_md = #{contentMd,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.lhy.systemdemo.pojo.article.Article">
+    update t_article
+    set title = #{title,jdbcType=VARCHAR},
+      article_abstract = #{articleAbstract,jdbcType=VARCHAR},
+      cover = #{cover,jdbcType=VARCHAR},
+      date = #{date,jdbcType=TIMESTAMP},
+      content_html = #{contentHtml,jdbcType=LONGVARCHAR},
+      content_md = #{contentMd,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lhy.systemdemo.pojo.article.Article">
+    update t_article
+    set title = #{title,jdbcType=VARCHAR},
+      article_abstract = #{articleAbstract,jdbcType=VARCHAR},
+      cover = #{cover,jdbcType=VARCHAR},
+      date = #{date,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <update id="deleteArticle" parameterType="long">
+    update t_article
+    set
+    status = 0
+    where
+    id = #{id}
+  </update>
+</mapper>
