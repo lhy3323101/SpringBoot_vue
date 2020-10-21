@@ -1,6 +1,8 @@
 package com.lhy.systemdemo.filter;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
+import org.springframework.web.util.WebUtils;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -15,7 +17,8 @@ import java.io.IOException;
  * @since 2019/8/28 17:40
  */
 @Configuration
-@WebFilter(filterName = "CorsFilter")
+@Order(1)
+@WebFilter(urlPatterns = {"/*"},filterName = "CorsFilter")
 public class CorsFilter implements Filter {
 
     @Override

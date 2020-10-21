@@ -44,3 +44,7 @@ export const article ={
   loadArticle:param => {return request.post(`${articleUrl}/loadArticle`,param.id)},
   deleteArticle:param => {return request.post(`${articleUrl}/deleteArticle`,param.id)}
 }
+
+export const video = {
+  preview:param => {return request.get("video/preview",param)}
+}

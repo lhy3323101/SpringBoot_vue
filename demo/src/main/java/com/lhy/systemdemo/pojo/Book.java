@@ -2,6 +2,7 @@ package com.lhy.systemdemo.pojo;
 
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
@@ -12,11 +13,14 @@ import java.util.Date;
  */
 @Data
 public class Book {
+
     /**
      * 主键id
      */
+    @NotNull(message = "主键id不能为空")
     private Long id;
 
+    private Category category;
     /**
      * 作者
      */
@@ -51,4 +55,12 @@ public class Book {
      * 出版时间
      */
     private Date publicTime;
+
+    public Book() {
+        System.out.println("Book's Construction");
+    }
+
+    public static void doBook(){
+        System.out.println("doBook");
+    }
 }

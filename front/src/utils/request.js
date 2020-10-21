@@ -26,7 +26,7 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   response => {
     return response
-  },
+},
   error => {
     if (error) {
       alert("登录过期或无访问权限")

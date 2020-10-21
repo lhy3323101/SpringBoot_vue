@@ -50,6 +50,7 @@
                 let message = this.$message;
                 api.login(this.loginForm)
                     .then(data => {
+                        console.log(data)
                         if (data.code === 1){
                             _this.$store.commit('login',data.re);
                             let path = this.$route.query.redirect;

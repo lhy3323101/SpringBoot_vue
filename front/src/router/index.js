@@ -80,7 +80,11 @@ export default new Router({
         requireAuth: true
       }
     },
-
+    {
+      path: '/video/preview',
+      name: 'VideoPreviewWeb',
+      component: resolve => require(['../components/admin/video/VideoPreview.vue'],resolve),
+    },
   ]
 })
 

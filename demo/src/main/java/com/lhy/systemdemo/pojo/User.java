@@ -38,11 +38,13 @@ public class User extends SaltVo {
     /**
      * 姓名
      */
+    @NotEmpty(message = "姓名不能为空")
     private String name;
 
     /**
      * 电话
      */
+    @NotEmpty(message = "手机号不能为空")
     private String phone;
 
     /**

@@ -7,6 +7,7 @@ import com.lhy.systemdemo.pojo.article.Article;
 import com.lhy.systemdemo.pojo.common.PageVO;
 import com.lhy.systemdemo.service.article.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,12 +30,14 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    @Cacheable(key = "\"article_list\".concat(#page.getPageNo())",value = "AngelCache")
     public PageInfo<Article> list(PageVO page) {
         if (page.getPageNo() == null || page.getPageNo().equals(0)){
             page.setPageNo(1);
         }
         PageHelper.startPage(page.getPageNo(),page.getPageSize());
         List<Article> articleList = articleMapper.queryList();
+        System.out.println("调取数据库查询");
         return new PageInfo<>(articleList);
     }
 
