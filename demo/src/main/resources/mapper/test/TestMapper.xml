@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lhy.systemdemo.dao.test.TestMapper">
+
+  <insert id="testInsert" parameterType="com.lhy.systemdemo.pojo.test.Test" timeout="3">
+        insert into t_${tableName} (name,creator,modifier) values (#{name},#{creator},#{modifier})
+  </insert>
+
+
+</mapper>
+
+

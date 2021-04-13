@@ -30,7 +30,7 @@ public class BookServiceImpl implements BookService {
         }
         try{
             file.transferTo(f);
-            return "http://localhost:8080/book/file/" + f.getName();
+            return "http://localhost:8082/book/file/" + f.getName();
         }catch (IOException e){
             log.error("图片转复制失败",e);
             throw new BusinessRuntimeException("内部系统错误，请联系管理员");

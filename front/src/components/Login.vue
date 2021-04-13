@@ -11,6 +11,15 @@
         <el-input type="password" v-model="loginForm.password"
                   auto-complete="off" placeholder="密码"></el-input>
       </el-form-item>
+      <el-form-item prop="validCode">
+        <div class="col-xs-6">
+          <el-input placeholder="请输入验证码" v-model="loginForm.validCode" type="text" :maxlength="4">
+          </el-input>
+        </div>
+      </el-form-item>
+      <div class="col-xs-6" style="margin-top: 10px;margin-bottom: 10px">
+        <el-image :src="validUrl" @click="updateImage"></el-image>
+      </div>
       <el-checkbox class="login_remember" v-model="loginForm.rememberFlag"
                    label-position="left"><span style="color: #505458">记住我(保持登录)</span></el-checkbox>
       <el-form-item style="width: 100%">
@@ -23,6 +32,7 @@
 
 <script>
     import {api} from '@/api/index.js'
+    import {BaseUrl} from '@/utils/common.js'
 
     export default {
         name: "Login",
@@ -34,23 +44,57 @@
                     ],
                     password: [
                         { required: true, message: '请输入密码', trigger: 'blur' }
-                    ]
+                    ],
+                    validCode: [
+                        { required: true, message: '请输入验证码', trigger: 'blur' }
+                    ],
                 },
                 loginForm: {
                     userName: '',
                     password: '',
-                    rememberFlag:false
+                    rememberFlag:false,
+                    validCode:'',
+                    uuid:'',
                 },
+                validUrl:"",
+                imageUuid:"",
                 loading: false
             }
         },
+        created(){
+           this.getValidImage();
+        },
         methods:{
+            /** 新建一个uuid*/
+            createUuid(){
+                let s = [];
+                let hexDigits = "0123456789abcdef";
+                for (let i = 0; i < 36; i++) {
+                    s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
+                }
+                s[14] = "4";
+                s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1);
+                s[8] = s[13] = s[18] = s[23] = "-";
+                this.imageUuid = s.join("");
+
+            },
+            /**获取验证码图片*/
+            getValidImage(){
+                if (!this.imageUuid){
+                    this.createUuid();
+                }
+                this.validUrl = BaseUrl() + "image/getValidImage?uuid=" + this.imageUuid;
+            },
+            /**更新验证码图片*/
+            updateImage(){
+                this.validUrl = BaseUrl() + "image/getValidImage?uuid=" + this.imageUuid + "&d=" + new Date()*1;
+            },
             login(){
                 let _this = this;
                 let message = this.$message;
+                this.loginForm.uuid = this.imageUuid;
                 api.login(this.loginForm)
                     .then(data => {
-                        console.log(data)
                         if (data.code === 1){
                             _this.$store.commit('login',data.re);
                             let path = this.$route.query.redirect;

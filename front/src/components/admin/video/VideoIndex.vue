@@ -46,12 +46,11 @@
         },
         methods:{
             handleClick(namePath){
+                let addr = process.env.NODE_ENV === 'development' ? 'http://localhost:8082' : 'http://114.55.171.17:8082';
                 if(namePath !== undefined && namePath){
-                    console.log("preview")
-                    window.open("http://localhost:8080/video/preview/" + namePath)
+                    window.open(addr + "/video/preview/" + namePath)
                 }else {
-                    console.log("preview123")
-                    window.open("http://localhost:8080/video/preview/123")
+                    window.open(addr + "/video/preview/123")
                 }
             }
         }

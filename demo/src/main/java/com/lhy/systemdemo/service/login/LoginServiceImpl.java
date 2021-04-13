@@ -1,5 +1,6 @@
 package com.lhy.systemdemo.service.login;
 
+import com.lhy.systemdemo.base.constant.BaseConstant;
 import com.lhy.systemdemo.base.enums.BusinessExceptionCode;
 import com.lhy.systemdemo.base.exception.BusinessRuntimeException;
 import com.lhy.systemdemo.dao.LoginMapper;
@@ -12,6 +13,7 @@ import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,9 +29,19 @@ public class LoginServiceImpl implements LoginService {
     @Autowired
     private LoginMapper loginMapper;
 
+    @Autowired
+    private RedisTemplate redisTemplate;
+
     @Override
     public User login(User user) {
-        //对用户进行校验
+        //1.校验验证码
+        String validCode = (String)redisTemplate.opsForValue().get(BaseConstant.IMAGE + user.getUuid());
+        if (validCode == null){
+            throw new BusinessRuntimeException(BusinessExceptionCode.VALID_CODE_EXPIRED.getDesc(),BusinessExceptionCode.VALID_CODE_EXPIRED.getCode());
+        }else if (!validCode.equals(user.getValidCode())){
+            throw new BusinessRuntimeException(BusinessExceptionCode.VALID_CODE_INCORRECT.getDesc(),BusinessExceptionCode.VALID_CODE_INCORRECT.getCode());
+        }
+        //2.对用户进行校验
         if (StringUtils.isBlank(user.getUserName())){
             throw new BusinessRuntimeException(BusinessExceptionCode.USER_NAME_EMPTY.getDesc(), BusinessExceptionCode.USER_NAME_EMPTY.getCode());
         }
@@ -37,11 +49,11 @@ public class LoginServiceImpl implements LoginService {
         if (resultUser == null){
             throw new BusinessRuntimeException(BusinessExceptionCode.NO_USER.getDesc(),BusinessExceptionCode.NO_USER.getCode());
         }
-        //如果账号被禁用则不允许登录
+        //3.如果账号被禁用则不允许登录
         if (!resultUser.isEnabled()){
             throw new BusinessRuntimeException(BusinessExceptionCode.USER_BANED.getDesc(),BusinessExceptionCode.USER_BANED.getCode());
         }
-        //验证密码
+        //4.验证密码
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(user.getUserName(), user.getPassword());
         if (user.getRememberFlag()){

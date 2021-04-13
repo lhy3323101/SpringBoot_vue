@@ -1,7 +1,11 @@
 package com.lhy.systemdemo.demo;
 
 import com.lhy.systemdemo.SystemDemoApplication;
+import com.lhy.systemdemo.dao.test.TestMapper;
 import com.lhy.systemdemo.pojo.Book;
+import com.lhy.systemdemo.service.article.ArticleService;
+import com.lhy.systemdemo.utils.BeanUtil;
+import com.lhy.systemdemo.utils.UtilTest;
 import org.apache.commons.lang3.time.DateUtils;
 import org.assertj.core.util.DateUtil;
 import org.junit.jupiter.api.Test;
@@ -24,6 +28,9 @@ class SystemDemoApplicationTests {
 
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
+
+    @Autowired
+	private TestMapper testMapper;
 
 
 	@Test
@@ -140,6 +147,17 @@ class SystemDemoApplicationTests {
 		}
 		System.out.println(buffer.toString());
 
+	}
+
+	@Test
+	void testBeanUtil(){
+		/*com.lhy.systemdemo.pojo.test.Test test = new com.lhy.systemdemo.pojo.test.Test();
+		test.setCreator("test111");
+		test.setModifier("super");
+		test.setName("angel");
+		test.setTableName("test");
+		testMapper.testInsert(test);*/
+        System.out.println(new SimpleDateFormat("yyyyMMdd_HHmm").format(new Date()));
 	}
 
 }

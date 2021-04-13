@@ -24,7 +24,7 @@ public class MyWebConfigurer extends WebMvcConfigurationSupport {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/book/file/**").addResourceLocations("file:" + "D:/Person/Project/front_back/img/");
+        registry.addResourceHandler(" /book/file/**").addResourceLocations("file:" + "D:/Person/Project/front_back/img/");
     }
 
     //弃用，采用shiro自带filter

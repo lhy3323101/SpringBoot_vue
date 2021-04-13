@@ -14,6 +14,8 @@ public enum BusinessExceptionCode {
     USER_PASSWORD_ERROR(102,"用户名或密码不正确"),
     USER_PASSWORD_EMPTY(103,"密码不能为空"),
     USER_BANED(104,"该用户已被冻结"),
+    VALID_CODE_EXPIRED(105,"验证码已失效"),
+    VALID_CODE_INCORRECT(106,"验证码错误"),
 
     //注册
     USER_EXISTED(201,"该用户名已存在，请尝试其它用户名"),
@@ -21,6 +23,7 @@ public enum BusinessExceptionCode {
     //功能
     ROLES_QUERY(301,"获取角色列表异常，请联系管理员"),
     UPDATE_ROLE(302,"修改角色信息异常，请联系管理员");
+
 
 
 

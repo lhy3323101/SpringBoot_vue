@@ -35,7 +35,7 @@ public class VideoServiceImpl implements VideoService{
         if (StringUtils.isNotBlank(movieName)){
             name = movieName;
         }
-        String realPath = sourcePath + "static/video/" + name + ".mp4";
+        String realPath = sourcePath + "video/" + name + ".mp4";
         Path filePath = Paths.get(realPath);
         if (Files.exists(filePath)){
             try {

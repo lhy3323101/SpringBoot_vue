@@ -124,6 +124,7 @@
                     enabled:value
                 };
                 if ( role.name === 'sysAdmin'){
+                    role.enabled = true
                     this.$message.warning("不可禁用系统管理员");
                     return;
                 }

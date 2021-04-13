@@ -36,6 +36,16 @@ public class User extends SaltVo {
     private String password;
 
     /**
+     * 唯一编码
+     */
+    private String uuid;
+
+    /**
+     * 验证码
+     */
+    private String validCode;
+
+    /**
      * 姓名
      */
     @NotEmpty(message = "姓名不能为空")

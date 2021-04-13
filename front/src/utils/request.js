@@ -4,7 +4,7 @@ import store from '../store'
 
 const service = axios.create({
   // process.env.NODE_ENV === 'development' 来判断是否开发环境
-  baseURL: process.env.NODE_ENV === 'development' ? 'http://localhost:8080/' : '',
+  baseURL: process.env.NODE_ENV === 'development' ? 'http://localhost:8082/' : 'http://114.55.171.17:8082/',
   timeout: 10000,
   headers: {
     'content-type': 'application/json',
